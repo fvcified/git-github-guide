@@ -1,4 +1,5 @@
 # Git & GitHub Setup Guide
+
 ## 1️⃣ Create a repository on GitHub
 - Go to **GitHub → New repository**
 - Enter the repository name **same as your folder** (e.g., `my_repository`)
@@ -212,6 +213,12 @@ git pull
 
 Downloads + merges/rebases.
 
+Clean deleted remote branches from local list:
+
+```bash
+git fetch --prune
+```
+
 ## 1️⃣4️⃣ Update branch with latest main
 Using rebase:
 
@@ -251,7 +258,42 @@ Then:
 3. Create Pull Request
 4. Wait for review
 
-## 1️⃣6️⃣ Amend commit
+After PR is merged on GitHub (Clean up):
+
+```bash
+git switch main
+git pull origin main
+git branch -d feature-name
+git fetch --prune
+```
+
+Using GitHub CLI (`gh`) instead of browser:
+
+```bash
+gh pr create --base main --title "feat: description" --body "PR details"
+gh pr list
+gh pr checkout <pr_number>
+gh pr review --approve
+gh pr merge --merge --delete-branch
+```
+
+## 1️⃣6️⃣ Fork & Upstream workflow
+Add original repository as upstream:
+
+```bash
+git remote add upstream https://github.com/<original_owner>/<repo>.git
+```
+
+Sync fork with original repository:
+
+```bash
+git fetch upstream
+git switch main
+git merge upstream/main
+git push origin main
+```
+
+## 1️⃣7️⃣ Amend commit
 Change last commit message:
 
 ```bash
@@ -266,7 +308,7 @@ git add .
 git commit --amend --no-edit
 ```
 
-## 1️⃣7️⃣ Handle merge conflicts (non-rebase)
+## 1️⃣8️⃣ Handle merge conflicts (non-rebase)
 Check conflicts:
 
 ```bash
@@ -295,17 +337,35 @@ git commit -m "resolve merge conflict"
 git push
 ```
 
-## 1️⃣8️⃣ Undo last commit (keep changes)
+## 1️⃣9️⃣ Undo last commit (keep changes)
 ```bash
 git reset --soft HEAD~1
 ```
 
-## 1️⃣9️⃣ Undo last commit (discard changes)
+## 2️⃣0️⃣ Undo last commit (discard changes)
 ```bash
 git reset --hard HEAD~1
 ```
 
-## 2️⃣0️⃣ Restore & unstage
+## 2️⃣1️⃣ Rescue commits from protected main (GH006 error)
+Move accidental commits made directly on `main` to a new branch and reset local main:
+
+```bash
+git switch -c fix-branch-name
+git push -u origin fix-branch-name
+git switch main
+git reset --hard origin/main
+```
+
+## 2️⃣2️⃣ Hard reset local branch to match remote
+Discard all local changes/commits and match GitHub 100%:
+
+```bash
+git fetch origin
+git reset --hard origin/main
+```
+
+## 2️⃣3️⃣ Restore & unstage
 Discard file changes:
 
 ```bash
@@ -330,7 +390,7 @@ Legacy:
 git reset HEAD <file>
 ```
 
-## 2️⃣1️⃣ Check commit history
+## 2️⃣4️⃣ Check commit history
 ```bash
 git log --oneline
 ```
@@ -343,7 +403,7 @@ git log --oneline --graph --all
 git log --pretty=format:"%h %an %ad %s" --date=short
 ```
 
-## 2️⃣2️⃣ Stash changes
+## 2️⃣5️⃣ Stash changes
 ```bash
 git stash
 ```
@@ -368,7 +428,7 @@ git stash drop stash@{0}
 git stash clear
 ```
 
-## 2️⃣3️⃣ Branching
+## 2️⃣6️⃣ Branching
 Create:
 
 ```bash
@@ -429,7 +489,7 @@ Rename:
 git branch -m <new_name>
 ```
 
-## 2️⃣4️⃣ Merging branches
+## 2️⃣7️⃣ Merging branches
 ```bash
 git checkout main
 ```
@@ -448,7 +508,7 @@ Abort:
 git merge --abort
 ```
 
-## 2️⃣5️⃣ Tagging
+## 2️⃣8️⃣ Tagging
 ```bash
 git tag v1.0.0
 ```
@@ -477,7 +537,7 @@ git tag -d v1.0.0
 git push origin --delete tag v1.0.0
 ```
 
-## 2️⃣6️⃣ Diff & inspect
+## 2️⃣9️⃣ Diff & inspect
 ```bash
 git diff
 ```
@@ -498,7 +558,7 @@ git show <commit_hash>
 git blame <file>
 ```
 
-## 2️⃣7️⃣ Cherry-pick
+## 3️⃣0️⃣ Cherry-pick
 ```bash
 git cherry-pick <commit_hash>
 ```
@@ -513,7 +573,7 @@ Abort:
 git cherry-pick --abort
 ```
 
-## 2️⃣8️⃣ Revert
+## 3️⃣1️⃣ Revert
 ```bash
 git revert <commit_hash>
 ```
@@ -522,7 +582,7 @@ git revert <commit_hash>
 git revert <commit_hash> --no-commit
 ```
 
-## 2️⃣9️⃣ Clean untracked files
+## 3️⃣2️⃣ Clean untracked files
 Preview:
 
 ```bash
@@ -547,7 +607,7 @@ Delete everything:
 git clean -fdx
 ```
 
-## 3️⃣0️⃣ Submodules
+## 3️⃣3️⃣ Submodules
 ```bash
 git submodule add https://github.com/<user>/<repo>.git <path>
 ```
@@ -568,7 +628,7 @@ git submodule deinit <path>
 git rm <path>
 ```
 
-## 3️⃣1️⃣ Aliases
+## 3️⃣4️⃣ Aliases
 ```bash
 git config --global alias.st status
 git config --global alias.co checkout
@@ -585,7 +645,7 @@ git br
 git lg
 ```
 
-## 3️⃣2️⃣ Global config
+## 3️⃣5️⃣ Global config
 ```bash
 git config --global user.name "Your Name"
 ```
@@ -624,7 +684,7 @@ View config:
 git config --list
 ```
 
-## 3️⃣3️⃣ .gitignore
+## 3️⃣6️⃣ .gitignore
 Create:
 
 ```bash
@@ -655,7 +715,7 @@ git add .
 git commit -m "remove file from tracking"
 ```
 
-## 3️⃣4️⃣ Fix detached HEAD
+## 3️⃣7️⃣ Fix detached HEAD
 ```bash
 git checkout -b <new_branch_name>
 ```
@@ -668,7 +728,7 @@ git checkout main
 git merge <new_branch_name>
 ```
 
-## 3️⃣5️⃣ Recover deleted branch
+## 3️⃣8️⃣ Recover deleted branch
 ```bash
 git reflog
 ```
@@ -677,21 +737,21 @@ git reflog
 git checkout -b <branch_name> <commit_hash>
 ```
 
-## 3️⃣6️⃣ Interactive rebase
+## 3️⃣9️⃣ Interactive rebase
 ```bash
 git rebase -i HEAD~<N>
 ```
 
 Commands:
 
-* pick
-* reword
-* squash
-* drop
+- pick
+- reword
+- squash
+- drop
 
 Never rewrite shared branch history.
 
-## 3️⃣7️⃣ Squash commits
+## 4️⃣0️⃣ Squash commits
 ```bash
 git reset --soft HEAD~3
 
@@ -700,17 +760,25 @@ git commit -m "combined commit"
 git push origin main --force-with-lease
 ```
 
+## 4️⃣1️⃣ Conventional Commits (Team Standard)
+- `feat:` add a new feature (e.g., `feat: add login page`)
+- `fix:` fix a bug (e.g., `fix: resolve null pointer error`)
+- `docs:` documentation updates (e.g., `docs: update setup guide`)
+- `style:` formatting/CSS changes without logic changes
+- `refactor:` code restructuring without changing behavior
+- `chore:` maintenance tasks, dependencies, or config updates
+
 ## ⚠️ Notes
 
-* Git ignores empty folders → use `.gitkeep`
-* `git fetch` does not merge
-* `git pull` = fetch + merge/rebase
-* `git revert` is safer than `git reset`
-* `git reflog` can recover most mistakes
-* Prefer `--force-with-lease` over `--force`
-* Use `.gitignore` early
-* Never force push to shared production branches
-* Always pull or fetch before major work
-* `--ours` keeps local changes
-* `--theirs` keeps incoming changes
-* Detached HEAD is not dangerous if you create a branch before leaving it
+- Git ignores empty folders → use `.gitkeep`
+- `git fetch` does not merge
+- `git pull` = fetch + merge/rebase
+- `git revert` is safer than `git reset`
+- `git reflog` can recover most mistakes
+- Prefer `--force-with-lease` over `--force`
+- Use `.gitignore` early
+- Never force push to shared production branches
+- Always pull or fetch before major work
+- `--ours` keeps local changes
+- `--theirs` keeps incoming changes
+- Detached HEAD is not dangerous if you create a branch before leaving it
