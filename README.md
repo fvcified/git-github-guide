@@ -1,5 +1,61 @@
 # Git & GitHub Guide
 
+## Table of Contents
+
+### Getting Started & Setup
+- [1️⃣ Create a repository on GitHub](#1️⃣-create-a-repository-on-github)
+- [2️⃣ Prepare your local folder](#2️⃣-prepare-your-local-folder)
+- [3️⃣ Connect to GitHub remote](#3️⃣-connect-to-github-remote)
+- [4️⃣ Rename local branch to main](#4️⃣-rename-local-branch-to-main)
+- [5️⃣ Set upstream branch](#5️⃣-set-upstream-branch)
+- [6️⃣ Authentication (Recommended)](#6️⃣-authentication-recommended)
+- [7️⃣ Clone an existing repository](#7️⃣-clone-an-existing-repository)
+
+### Everyday Workflow & Syncing
+- [1️⃣1️⃣ Everyday workflow](#1️⃣1️⃣-everyday-workflow)
+- [1️⃣3️⃣ Fetch without merge](#1️⃣3️⃣-fetch-without-merge)
+- [1️⃣4️⃣ Update branch with latest main](#1️⃣4️⃣-update-branch-with-latest-main)
+- [2️⃣4️⃣ Check commit history](#2️⃣4️⃣-check-commit-history)
+- [2️⃣5️⃣ Stash changes](#2️⃣5️⃣-stash-changes)
+- [2️⃣9️⃣ Diff & inspect](#2️⃣9️⃣-diff--inspect)
+
+### Branching, Merging & Collaboration
+- [1️⃣5️⃣ Pull Request workflow](#1️⃣5️⃣-pull-request-workflow)
+- [1️⃣6️⃣ Fork & Upstream workflow](#1️⃣6️⃣-fork--upstream-workflow)
+- [2️⃣6️⃣ Branching](#2️⃣6️⃣-branching)
+- [2️⃣7️⃣ Merging branches](#2️⃣7️⃣-merging-branches)
+- [2️⃣8️⃣ Tagging](#2️⃣8️⃣-tagging)
+- [3️⃣0️⃣ Cherry-pick](#3️⃣0️⃣-cherry-pick)
+- [3️⃣3️⃣ Submodules](#3️⃣3️⃣-submodules)
+- [4️⃣1️⃣ Conventional Commits (Team Standard)](#4️⃣1️⃣-conventional-commits-team-standard)
+
+### Fixing Mistakes & Recovery
+- [8️⃣ Handle rejected push](#8️⃣-handle-rejected-push)
+- [9️⃣ Handle merge conflicts during rebase](#9️⃣-handle-merge-conflicts-during-rebase)
+- [🔟 Force push (last resort)](#🔟-force-push-last-resort)
+- [1️⃣2️⃣ Upstream branch mismatch](#1️⃣2️⃣-upstream-branch-mismatch)
+- [1️⃣7️⃣ Amend commit](#1️⃣7️⃣-amend-commit)
+- [1️⃣8️⃣ Handle merge conflicts (non-rebase)](#1️⃣8️⃣-handle-merge-conflicts-non-rebase)
+- [1️⃣9️⃣ Undo last commit (keep changes)](#1️⃣9️⃣-undo-last-commit-keep-changes)
+- [2️⃣0️⃣ Undo last commit (discard changes)](#2️⃣0️⃣-undo-last-commit-discard-changes)
+- [2️⃣1️⃣ Rescue commits from protected main (GH006 error)](#2️⃣1️⃣-rescue-commits-from-protected-main-gh006-error)
+- [2️⃣2️⃣ Hard reset local branch to match remote](#2️⃣2️⃣-hard-reset-local-branch-to-match-remote)
+- [2️⃣3️⃣ Restore & unstage](#2️⃣3️⃣-restore--unstage)
+- [3️⃣1️⃣ Revert](#3️⃣1️⃣-revert)
+- [3️⃣2️⃣ Clean untracked files](#3️⃣2️⃣-clean-untracked-files)
+- [3️⃣7️⃣ Fix detached HEAD](#3️⃣7️⃣-fix-detached-head)
+- [3️⃣8️⃣ Recover deleted branch](#3️⃣8️⃣-recover-deleted-branch)
+- [3️⃣9️⃣ Interactive rebase](#3️⃣9️⃣-interactive-rebase)
+- [4️⃣0️⃣ Squash commits](#4️⃣0️⃣-squash-commits)
+
+### Configuration & Reference
+- [3️⃣4️⃣ Aliases](#3️⃣4️⃣-aliases)
+- [3️⃣5️⃣ Global config](#3️⃣5️⃣-global-config)
+- [3️⃣6️⃣ .gitignore](#3️⃣6️⃣-gitignore)
+- [⚠️ Notes](#️-notes)
+
+---
+
 ## 1️⃣ Create a repository on GitHub
 - Go to **GitHub → New repository**
 - Enter the repository name **same as your folder** (e.g., `my_repository`)
