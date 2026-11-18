@@ -1,4 +1,4 @@
-# Git & GitHub Setup Guide
+# Git & GitHub Guide
 
 ## 1️⃣ Create a repository on GitHub
 - Go to **GitHub → New repository**
